@@ -1,20 +1,3 @@
-/*!
-*   _____       _             __                 _____                               ______ _       _   _
-*  |_   _|     | |           / _|               |_   _|                             |  ____| |     | | (_)
-*    | |  _ __ | |_ ___ _ __| |_ __ _  ___ ___    | |  ___ ___  _ __  ___   ______  | |__  | | __ _| |_ _  ___ ___  _ __
-*    | | | '_ \| __/ _ \ '__|  _/ _` |/ __/ _ \   | | / __/ _ \| '_ \/ __| |______| |  __| | |/ _` | __| |/ __/ _ \| '_ \
-*   _| |_| | | | ||  __/ |  | || (_| | (_|  __/  _| || (_| (_) | | | \__ \          | |    | | (_| | |_| | (_| (_) | | | |
-*  |_____|_| |_|\__\___|_|  |_| \__,_|\___\___| |_____\___\___/|_| |_|___/          |_|    |_|\__,_|\__|_|\___\___/|_| |_|
-*
-*                         UIcons 2.6.0 - https://www.flaticon.com/uicons/interface-icons
-*/
-@font-face {
-    font-family: "uicons-regular-rounded";
-    src: url("../webfonts/uicons-regular-rounded.woff2") format("woff2"),
-    url("../webfonts/uicons-regular-rounded.woff") format("woff"),
-    url("../webfonts/uicons-regular-rounded.eot#iefix") format("embedded-opentype");
-    font-display: swap;
-}
 
     i[class^="fi-rr-"]:before, i[class*=" fi-rr-"]:before, span[class^="fi-rr-"]:before, span[class*="fi-rr-"]:before {
 font-family: uicons-regular-rounded !important;
@@ -6060,7 +6043,9 @@ line-height: 1;
         .fi-rr-it-alt:before {
     content: "\e8fa";
     }
-
+        .fi-rr-it-computer:before {
+    content: "\e8fc";
+    }
         .fi-rr-italian:before {
     content: "\e8fd";
     }
