@@ -1,4 +1,4 @@
 <?php include"./layout/headder.php"?>
+<div class="h">Hello clients</div>
 
-<h1>Dashboard</h1>
 <?php include"./layout/footer.php"?>
