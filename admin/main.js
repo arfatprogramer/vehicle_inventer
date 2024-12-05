@@ -1,5 +1,5 @@
 let menuIcon=document.querySelector('#menu-icon');
-let arroIcon=document.querySelector('#arro-icon');
+let arrowIcon=document.querySelector('#arrow-icon');
 let navBar=document.querySelector('.navbar');
 
 let status=true;
@@ -28,10 +28,15 @@ menuIcon.addEventListener("click",(e,status) =>{
         
     
 })
-arroIcon.addEventListener("click",(e) =>{
+arrowIcon.addEventListener("click",(e) =>{
     console.log(e);
     console.log("clicked");
     
     
 })
+
+
+
+
+
 
