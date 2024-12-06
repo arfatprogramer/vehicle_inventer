@@ -28,21 +28,23 @@
         <input class='bg-gray-600 w-[107px] ms:w-[150px] ms:md:w-[150px]  ' placeholder='Chose Date' type="date" name="to" id="to">
         </div>
     <div class="search bg-gray-600 rounded-full px-2 mt-2 flex items-center justify-center md:w-2/5">
-        <input class='bg-gray-600 outline-none border-r-2 w-[90%] px-2' type="text" name="search" id="search"  placeholder='Search...'>
+        <input class='bg-gray-600 outline-none border-r-2 w-[90%] px-2' type="search" name="search" id="search"  placeholder='Search...'>
         <button type='submit' class='text-center px-3'>Search</i></button>
     </div>
 </form>
 
 <!--table start -->
 <div class='w-full overflow-x-auto mt-2'>
-<table class='w-full'>
+<table class='w-[700px] sm:w-full'>
     <thead class='h-1'>
         <tr class='h-1 border-2 bg-green-700 '>
             <th class='w-10 py-2'>Date</th>
             <th class='w-32'>Vehicle Number</th>
             <th class='w-32'>Customer Name</th>
             <th class='w-10'>Status</th>
-            <th class='w-10'>Action</th>
+            <th class='w-10'>Doc</th>
+            <th class='w-10 text-right'>Action</th>
+            <th class='w-10'></th>
         </tr>
     </thead>
     <tbody>
@@ -50,7 +52,7 @@
          while($num<10){
             ?>
         <tr class='h-2 border-1 bg-gray-600 '>
-            <td class='py-1 text-center'><?php echo $num?></td>
+            <td class='py-1 text-center '>22/12/2024</td>
             <td class='py-1 text-center'>GJ 15 cw 9400</td>
             <td class='py-1 text-center'>Mo Arfat Ansari</td>
             <td class='py-1 text-center'>
@@ -60,9 +62,13 @@
                     <option value="challan">Challan</option>
                 </select>
             </td>
-            <td class=' flex gap-3  items-center justify-center py-1 '>
-                <a href="#"><button class='p-1 border-2 bg-blue-500 text-center'><i class="fi fi-rr-arrow-up-right-from-square"></i></button></a>
-                <a href="#"><button class='p-1 border-2 bg-red-700 text-center'><i class="fi fi-rr-trash"></i></button></a>
+            <td class='py-1 max-sm:px-3 text-center'><a href="#"><button class='p-1 border-2 bg-blue-500 text-center'><i class="fi fi-rr-document px-3"></button></a></i></td>
+            <!-- <td class=' flex gap-3 h-full  items-center justify-center py-1 '> -->
+            <td class='py-1 max-sm:px-3 text-center '>
+                <a href="#"><button class='p-1 border-2 bg-blue-500 text-center my-2'><i class="fi fi-rr-arrow-up-right-from-square px-3"></i></button></a>
+            </td>
+            <td class='py-1 max-sm:px-3 text-center '>
+                <a href="#"><button class='p-1 border-2 bg-red-700 text-center my-2'><i class="fi fi-rr-trash px-3"></i></button></a>
             </td>
         </tr>
         <?php $num++; }?>

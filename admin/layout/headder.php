@@ -15,19 +15,19 @@ if(!$_SESSION['login']){
       <div class="menu max-sm:hidden ">
         <ul class=''>
           <a href="./">
-          <li class='h-14 text-2xl md:text-lg sm:text-sm sm:px-3 flex items-center px-3 gap-6 border-b-4  border-black hover:bg-green-700 cursor-pointer'>
+          <li class='h-14 text-2xl md:text-lg sm:text-sm sm:px-3 flex items-center px-3 gap-6 border-b-4  border-black hover:bg-green-700 active:bg-violet-700 cursor-pointer'>
             <i class="fi fi-rr-apps"></i>
             <span class='px-4' >Dashboard</span>
           </li>
         </a>
           <a href="./Clients.php">
-          <li class='h-14 text-2xl md:text-lg sm:text-sm sm:px-3 flex items-center px-4 gap-6 border-b-4 border-black hover:bg-green-700 cursor-pointer '>
+          <li class='h-14 text-2xl md:text-lg sm:text-sm sm:px-3 flex items-center px-4 gap-6 border-b-4 border-black hover:bg-green-700 active:bg-violet-700 cursor-pointer '>
            <i class="fi fi-rr-users-alt"></i>
            <span class='px-4' >Clients</span>
           </li>
         </a>
         <a href="./Vehicles.php">
-          <li class='h-14 text-2xl md:text-lg sm:text-sm sm:px-3 flex items-center px-4 gap-6 border-b-4  border-black hover:bg-green-700 cursor-pointer'>
+          <li class='h-14 text-2xl md:text-lg sm:text-sm sm:px-3 flex items-center px-4 gap-6 border-b-4  border-black hover:bg-green-700 active:bg-violet-700 cursor-pointer'>
             <i class="fi fi-rr-shipping-fast"></i>
             <span class='px-4'>Vehicles</span>
           </li>
