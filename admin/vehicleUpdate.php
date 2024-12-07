@@ -3,12 +3,21 @@ include "./layout/headder.php";
 include "./database/conn.php";
 
 $nameError = $numberError = null;
-$name = '';
-$number = '';    
+$name = $number = '';
+if(isset($_GET['id'])){
+
+    $id=$_GET['id'];
+    $sql="SELECT vahicleNumber,customerName FROM vahicle WHERE id = $id";
+    $result = mysqli_query($conn, $sql);
+    $customer = mysqli_fetch_assoc($result);
+    $name = $customer['customerName'];
+    $number = $customer['vahicleNumber'];
+}
 
 if (isset($_POST['submit'])) {
     $name = $_POST['customerName'];
     $number = $_POST['VehicleNumber'];
+    $id = $_POST['id'];
     
     if (empty($name)) {
         $nameError = "Name is required";
@@ -24,11 +33,12 @@ if (isset($_POST['submit'])) {
         
         if (mysqli_num_rows($checkResult) > 0) {
             
-            $sql = "UPDATE vahicle SET customerName = '$name' vahicleNumber='$number' WHERE id =$id ";
+            $sql = "UPDATE vahicle SET customerName = '$name' , vahicleNumber='$number' WHERE id =$id ";
+            echo $sql;
             $result = mysqli_query($conn, $sql);
             if ($result) {
                 $_SESSION['status'] = true;
-                $_SESSION['msg'] = "Data Inserted";
+                $_SESSION['msg'] = "Data Updated";
                 $_SESSION['msg-icon'] = "success";
                 header("location:./Vehicles.php");
             } else {
@@ -59,6 +69,7 @@ if (isset($_POST['submit'])) {
             <span class='absolute bottom-0 left-0 text-red-600'><?php echo $nameError ?></span>
         </div>
         <div class="w-full py-2">
+        <input type="hidden" name="id" value='<?php echo $id?>'>
             <input class='w-full bg-green-600 rounded-lg h-10' type="submit" name='submit' value='Update'>
         </div>
     </form>

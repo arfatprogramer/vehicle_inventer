@@ -152,13 +152,13 @@ $result = mysqli_query($conn, $sql);
                 </select>
             </td>
             <td class='py-1 max-sm:px-3 text-center'>
-                <a href="#?<?php echo $row['id']?>"><button class='p-1 border-2 bg-blue-500 text-center'><i class="fi fi-rr-document px-3"></button></a></i>
+                <a href="#?id=<?php echo $row['id']?>"><button class='p-1 border-2 bg-blue-500 text-center'><i class="fi fi-rr-document px-3"></button></a></i>
             </td>
             <td class='py-1 max-sm:px-3 text-center '>
-                <a href="#?<?php echo $row['id']?>"><button class='p-1 border-2 bg-blue-500 text-center my-2'><i class="fi fi-rr-arrow-up-right-from-square px-3"></i></button></a>
+                <a href="vehicleUpdate.php?id=<?php echo $row['id']?>"><button class='p-1 border-2 bg-blue-500 text-center my-2'><i class="fi fi-rr-arrow-up-right-from-square px-3"></i></button></a>
             </td>
             <td class='py-1 max-sm:px-3 text-center '>
-                <a href="#?<?php echo $row['id']?>"><button class='p-1 border-2 bg-red-700 text-center my-2'><i class="fi fi-rr-trash px-3"></i></button></a>
+                <a href="vehicleDelete.php?id=<?php echo $row['id']?>"><button class='p-1 border-2 bg-red-700 text-center my-2'><i class="fi fi-rr-trash px-3"></i></button></a>
             </td>
         </tr>
         <?php  }?>
