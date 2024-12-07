@@ -93,7 +93,7 @@ $result = mysqli_query($conn, $sql);
 ?>
 <div class="flex items-center justify-between p-2">
     <a href="new_vehicle.php"><button class='py-2 px-5 border-2 bg-green-700 rounded-lg hover:bg-blue-700'>New Vehicle</button></a>
-    <button class='py-2 px-5 border-2 bg-green-700 rounded-lg hover:bg-blue-700'>Generate PDF</button>
+    <a href="generate_pdf.php?search=<?php echo$search?>&&date=<?php echo empty($date)?"today":$date?>&&filter=<?php echo$filter?>"> <button class='py-2 px-5 border-2 bg-green-700 rounded-lg hover:bg-blue-700'>Generate PDF</button></a>
 </div>
 <form class='m-1   md:flex md:justify-between ' method='post' action="<?php echo $_SERVER['PHP_SELF']; ?>">
     <div class="filter py-3 px-1">
@@ -145,10 +145,10 @@ $result = mysqli_query($conn, $sql);
             <td class='py-1 text-center'><?php echo $row['vahicleNumber']?></td>
             <td class='py-1 text-center'><?php echo $row['customerName']?></td>
             <td class='py-1 text-center'>
-                <select class='<?php if($row["status"] == 1){echo'bg-yellow-600';}elseif($row["status"] == 2){echo'bg-green-600';}else{echo'bg-red-700';} ?>' name="status" id="status">
-                    <option value="1" <?php  echo $row["status"] == 1 ? " selected" : "" ?>>Pending</option>
-                    <option  value="2" <?php echo  $row["status"] == 2 ? " selected" : "" ?>>Done</option>
-                    <option value="3" <?php  echo $row["status"] == 3 ? " selected" : "" ?>>Challan</option>
+                <select  class='status <?php if($row["status"] == 1){echo'bg-yellow-600';}elseif($row["status"] == 2){echo'bg-green-600';}else{echo'bg-red-700';} ?>' name="status" id="status">
+                    <option value="<?php echo $row['id']?>1" <?php  echo $row["status"] == 1 ? " selected" : "" ?>>Pending</option>
+                    <option  value="<?php echo $row['id']?>2" <?php echo  $row["status"] == 2 ? " selected" : "" ?>>Done</option>
+                    <option value="<?php echo $row['id']?>3" <?php  echo $row["status"] == 3 ? " selected" : "" ?>>Challan</option>
                 </select>
             </td>
             <td class='py-1 max-sm:px-3 text-center'>
@@ -192,6 +192,32 @@ $result = mysqli_query($conn, $sql);
         }else{
             document.getElementById("custom").classList.add('hidden');
         }
+    });
+
+    const vahicleStatus=document.querySelectorAll('.status');
+    
+    vahicleStatus.forEach((e)=>{
+        
+        e.addEventListener("change",async (e)=>{
+        let value=e.target.value;
+        let id=value.slice(0,value.length-1);
+        let update=value[value.length-1];
+        let res=await fetch(`updateVahicleStatus.php?id=${id}&&value=${update}`);
+        let data=await res.json();
+        if(data){
+            if(update==1){
+                e.target.style.backgroundColor='#ca8a04';
+            }else if(update==2){
+                e.target.style.backgroundColor='#16a34a';
+
+            }else if(update==3){
+                e.target.style.backgroundColor='#b91c1c';
+
+            }
+            
+        }
     })
+    });
+    
 </script>
 <?php include"./layout/footer.php"?>
