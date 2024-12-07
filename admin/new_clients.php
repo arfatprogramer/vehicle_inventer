@@ -47,11 +47,6 @@ if((empty($nameError) && empty($numberError))&&((!empty($name))&&(!empty($number
             <input class='w-full bg-gray-900 border-b-2 px-2 outline-none' type="text" name='name' value='<?php echo $name?$name:""?>'>
             <span class='absolute bottom-0 left-0 text-red-600'><?php echo $nameError?></span>
         </div>
-        <div class="w-full pt-2 pb-7 relative">
-            <label for="state">State</label>
-            <input class='w-full bg-gray-900 border-b-2 px-2 outline-none' type="text" name='name' value='<?php echo $name?$name:""?>'>
-            <span class='absolute bottom-0 left-0 text-red-600'><?php echo $nameError?></span>
-        </div>
         <div class="w-full pt-2 pb-7 relative ">
             <label for="phoneNumber">Phone Number</label>
             <input class='w-full bg-gray-900 border-b-2 px-2 outline-none' type="text" name='phoneNumber'value='<?php echo $number?$number:""?>'>

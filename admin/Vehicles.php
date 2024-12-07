@@ -4,7 +4,8 @@ include "./database/conn.php";
 $filter="";
 $date="";
 $search="";
-if(isset($_POST['search'])){
+if($_SERVER['REQUEST_METHOD']=='POST'){
+     $sql="SELECT * FROM vahicle ";
     $search= $_POST['search'];
     $date= $_POST['date'];
     $filter= $_POST['filter'];
@@ -25,29 +26,67 @@ if(isset($_POST['search'])){
             if (!empty($from) && !empty($to)) {
                 return ['from' => $from, 'to' => $to];
             } 
+        }elseif ($arg === "range") {
+            // Retrieve the custom date range from POST request
+            $from = date("Y-m-d", strtotime("-6 day"));
+            $to = $today;
+            
+            // Validate the dates
+            if (!empty($from) && !empty($to)) {
+                return ['from' => $from, 'to' => $to];
+            } 
         }
     }
-    
-}
 
-if (is_array($searchDate)) {
-    // Use $searchDate['from'] and $searchDate['to'] in your SQL query
-    $sql = "SELECT * FROM vahicle WHERE date BETWEEN '{$searchDate['from']}' AND '{$searchDate['to']}' ORDER BY id DESC";
-} else {
-    // Handle other cases (today, yesterday)
-}
+    $searchDate=findDate($date);
+    //new logic implementation
 
-if(!empty($search)){
-    $sql="SELECT * FROM vahicle WHERE vahicleNumber LIKE '%$search%' OR CustomerName LIKE '%$search%' ORDER BY id DESC";
+   
     
-}else{
-    if(!empty($filter)){
+    if(!empty($search)){
+        $sql=$sql."WHERE vahicleNumber LIKE '%$search%' OR CustomerName LIKE '%$search%' ";
         
     }
-    $sql="SELECT * FROM vahicle ORDER BY id DESC";
+
+    if((!empty($filter))&&(!empty($search))){
+        $sql=$sql."and status = $filter";
+        
+    }elseif((!empty($filter))&&(empty($search))){
+        $sql=$sql."where status = $filter";
+        
+    }
+
+    // date filter 
+    if(is_array($searchDate)){
+        if(empty($search) && empty($filter)){
+            $sql=$sql."WHERE date BETWEEN '$searchDate[from]' AND '$searchDate[to]'";
+           
+        }else{
+            $sql=$sql." AND date BETWEEN '$searchDate[from]' AND '$searchDate[to]'";
+            
+        }
+    }else{
+         if(empty($search) && empty($filter)){
+             $sql=$sql." WHERE date LIKE '$searchDate'";
+        
+            }else{
+                
+            $sql=$sql." and date LIKE '$searchDate'";
+        }
+    }
+
+    
+    
+    
+    
+}else{
+    $defaultDate=date("Y-m-d");
+    $sql="SELECT * FROM vahicle Where date LIKE '$defaultDate' ";
     
 }
 
+$sql=$sql." ORDER BY date DESC";
+// echo $sql;
 
 $result = mysqli_query($conn, $sql);
 
@@ -60,15 +99,16 @@ $result = mysqli_query($conn, $sql);
     <div class="filter py-3 px-1">
         <button class='bg-blue-600 py-1 px-2 rounded-lg border-2 hover:bg-purple-700' type=submit name="filter">Filter </button>
         <select class='bg-gray-600 mx-3' name="filter" id="filter">
-            <option value="all" <?php echo$filter == "all" ? " selected" : "" ?>>All</option>
-            <option value="done"<?php echo$filter == "done" ? " selected" : "" ?>>Done</option>
-            <option value="pending"<?php echo$filter == "pending" ? " selected" : "" ?>>Pending</option>
-            <option value="challan"<?php echo$filter == "challan" ? " selected" : "" ?>>Challan</option>
+            <option value="" <?php echo$filter == "" ? " selected" : "" ?>>All</option>
+            <option value="1"<?php echo$filter == "1" ? " selected" : "" ?>>Pending</option>
+            <option value="2"<?php echo$filter == "2" ? " selected" : "" ?>>Done</option>
+            <option value="3"<?php echo$filter == "3" ? " selected" : "" ?>>Challan</option>
         </select>
         <!-- <label for="date">Date </label> -->
         <select id='dateFilter' class='bg-gray-600 mx-3' name="date" id="filter">
             <option value="today"<?php echo$date == "today" ? " selected" : "" ?>>Today</option>
             <option value="yesterday" <?php echo$date == "yesterday" ? " selected" : "" ?>>Yesterday</option>
+            <option value="range" <?php echo$date == "range" ? " selected" : "" ?>>Last 7 days</option>
             <option value="custom" <?php echo$date == "custom" ? " selected" : "" ?>>custom</option>
         </select>
         
@@ -97,7 +137,7 @@ $result = mysqli_query($conn, $sql);
         </tr>
     </thead>
     <tbody>
-        <?php $num=1;
+        <?php 
          while($row=mysqli_fetch_assoc($result)){
             ?>
         <tr class='h-2 border-1 bg-gray-600 '>
@@ -105,22 +145,23 @@ $result = mysqli_query($conn, $sql);
             <td class='py-1 text-center'><?php echo $row['vahicleNumber']?></td>
             <td class='py-1 text-center'><?php echo $row['customerName']?></td>
             <td class='py-1 text-center'>
-                <select class='<?php if($row["status"] == 0){echo'bg-yellow-600';}elseif($row["status"] == 1){echo'bg-green-600';}else{echo'bg-red-700';} ?>' name="status" id="status">
-                    <option value="0" <?php $row["status"] == 0 ? " selected" : "" ?>>Pending</option>
-                    <option  value="1" <?php $row["status"] == 1 ? " selected" : "" ?>>Done</option>
-                    <option value="2" <?php $row["status"] == 2 ? " selected" : "" ?>>Challan</option>
+                <select class='<?php if($row["status"] == 1){echo'bg-yellow-600';}elseif($row["status"] == 2){echo'bg-green-600';}else{echo'bg-red-700';} ?>' name="status" id="status">
+                    <option value="1" <?php  echo $row["status"] == 1 ? " selected" : "" ?>>Pending</option>
+                    <option  value="2" <?php echo  $row["status"] == 2 ? " selected" : "" ?>>Done</option>
+                    <option value="3" <?php  echo $row["status"] == 3 ? " selected" : "" ?>>Challan</option>
                 </select>
             </td>
-            <td class='py-1 max-sm:px-3 text-center'><a href="#"><button class='p-1 border-2 bg-blue-500 text-center'><i class="fi fi-rr-document px-3"></button></a></i></td>
-            <!-- <td class=' flex gap-3 h-full  items-center justify-center py-1 '> -->
-            <td class='py-1 max-sm:px-3 text-center '>
-                <a href="#"><button class='p-1 border-2 bg-blue-500 text-center my-2'><i class="fi fi-rr-arrow-up-right-from-square px-3"></i></button></a>
+            <td class='py-1 max-sm:px-3 text-center'>
+                <a href="#?<?php echo $row['id']?>"><button class='p-1 border-2 bg-blue-500 text-center'><i class="fi fi-rr-document px-3"></button></a></i>
             </td>
             <td class='py-1 max-sm:px-3 text-center '>
-                <a href="#"><button class='p-1 border-2 bg-red-700 text-center my-2'><i class="fi fi-rr-trash px-3"></i></button></a>
+                <a href="#?<?php echo $row['id']?>"><button class='p-1 border-2 bg-blue-500 text-center my-2'><i class="fi fi-rr-arrow-up-right-from-square px-3"></i></button></a>
+            </td>
+            <td class='py-1 max-sm:px-3 text-center '>
+                <a href="#?<?php echo $row['id']?>"><button class='p-1 border-2 bg-red-700 text-center my-2'><i class="fi fi-rr-trash px-3"></i></button></a>
             </td>
         </tr>
-        <?php $num++; }?>
+        <?php  }?>
     </tbody>
 </table>
 </div>
@@ -132,7 +173,7 @@ $result = mysqli_query($conn, $sql);
 <script>
    // for custom date range
    const dateFilter=document.getElementById("dateFilter");
-   if(dateFilter.selectedIndex==2){
+   if(dateFilter.selectedIndex==3){
          html=`<label for="date">From </label>
         <input class='bg-gray-600 w-[107px] ms:w-[150px] ms:md:w-[150px] '  placeholder='Chose Date' type="date" name="from" id="from">
         <label for="date"> To </label>
@@ -141,7 +182,7 @@ $result = mysqli_query($conn, $sql);
         document.getElementById("custom").classList.remove('hidden');
         }
    dateFilter.addEventListener("change",()=>{
-       if(dateFilter.selectedIndex==2){
+       if(dateFilter.selectedIndex==3){
          html=`<label for="date">From </label>
         <input class='bg-gray-600 w-[107px] ms:w-[150px] ms:md:w-[150px] '  placeholder='Chose Date' type="date" name="from" id="from">
         <label for="date"> To </label>
