@@ -14,7 +14,7 @@ $result=mysqli_query($conn,$query);
 ?>
 <div class="flex items-center justify-between p-2">
     <a href="new_clients.php"><button class='py-2 px-5 border-2 bg-green-700 rounded-lg hover:bg-blue-700'>New Customer</button></a>
-    <button class='py-2 px-5 border-2 bg-green-700 rounded-lg hover:bg-blue-700'>Generate PDF</button>
+    <a href="clientPdf.php"><button class='py-2 px-5 border-2 bg-green-700 rounded-lg hover:bg-blue-700'>Generate PDF</button></a>
 </div>
 <form class='m-1 px-2 h-10  md:flex md:justify-end  max-md:h-10' action="<?php echo $PHP_SELF?>">
     <div class="search bg-gray-600 rounded-full px-2 flex items-center justify-center md:w-2/5">

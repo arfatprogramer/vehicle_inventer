@@ -28,12 +28,7 @@ menuIcon.addEventListener("click",(e,status) =>{
         
     
 })
-arrowIcon.addEventListener("click",(e) =>{
-    console.log(e);
-    console.log("clicked");
-    
-    
-})
+
 
 
 

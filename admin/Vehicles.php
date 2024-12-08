@@ -131,7 +131,7 @@ $result = mysqli_query($conn, $sql);
             <th class='w-32'>Vehicle Number</th>
             <th class='w-32'>Customer Name</th>
             <th class='w-10'>Status</th>
-            <th class='w-10'>Doc</th>
+            <!-- <th class='w-10'>Doc</th> -->
             <th class='w-10 text-right'>Action</th>
             <th class='w-10'></th>
         </tr>
@@ -151,9 +151,9 @@ $result = mysqli_query($conn, $sql);
                     <option value="<?php echo $row['id']?>3" <?php  echo $row["status"] == 3 ? " selected" : "" ?>>Challan</option>
                 </select>
             </td>
-            <td class='py-1 max-sm:px-3 text-center'>
-                <a href="#?id=<?php echo $row['id']?>"><button class='p-1 border-2 bg-blue-500 text-center'><i class="fi fi-rr-document px-3"></button></a></i>
-            </td>
+            <!-- <td class='py-1 max-sm:px-3 text-center'>
+                <a href="#?id=<?php //echo $row['id']?>"><button class='p-1 border-2 bg-blue-500 text-center'><i class="fi fi-rr-document px-3"></button></a></i>
+            </td> -->
             <td class='py-1 max-sm:px-3 text-center '>
                 <a href="vehicleUpdate.php?id=<?php echo $row['id']?>"><button class='p-1 border-2 bg-blue-500 text-center my-2'><i class="fi fi-rr-arrow-up-right-from-square px-3"></i></button></a>
             </td>
