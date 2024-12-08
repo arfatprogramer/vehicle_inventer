@@ -98,7 +98,7 @@ if(is_array($searchDate)){
 $result = mysqli_query($conn, $sql);
 
 // Set font for the data
-$pdf->SetFont('Arial', '', 12);
+$pdf->SetFont('Arial', '', 10);
 
 // Loop through the data and add it to the PDF
 while ($row = mysqli_fetch_assoc($result)) {
@@ -110,10 +110,10 @@ while ($row = mysqli_fetch_assoc($result)) {
     }else{
         $status='Challan';
     }
-    $pdf->Cell(30, 10, $row['date'], 1);
-    $pdf->Cell(50, 10, $row['vahicleNumber'], 1);
-    $pdf->Cell(50, 10, $row['customerName'], 1);
-    $pdf->Cell(50, 10, $status, 1); // You may want to convert status to a readable format
+    $pdf->Cell(30, 8, $row['date'], 1);
+    $pdf->Cell(50, 8, $row['vahicleNumber'], 1);
+    $pdf->Cell(50, 8, $row['customerName'], 1);
+    $pdf->Cell(50, 8, $status, 1); // You may want to convert status to a readable format
     // $pdf->Cell(30, 10, 'Doc', 1); // Placeholder for document link
     $pdf->Ln();
 }
